@@ -1,24 +1,38 @@
-This project uses unsupervised learning (clustering) to group 88 PGA Tour golfers into balanced and engaging groups. It takes into account:
+# PGA Tour Player Grouping — Unsupervised ML for Sports Analytics
 
-Player performance metrics (e.g., strokes gained, scrambling, etc.)
+An unsupervised machine learning system that groups 88 PGA Tour golfers into balanced, broadcast-ready 4-player groups — replicating (and improving on) how tournament organizers manually build pairings.
 
-Fan interest scores (proxy for popularity)
+## Problem
 
-The goal is to create groups that are fair, competitive, and attractive for broadcasters — where fan favorites and top performers get balanced visibility.
+Tournament groupings aren't random — organizers manually balance player ability, play style/pace, and fan interest to create fair, competitive, broadcast-worthy matchups. This process is done by hand today. Could it be modeled and automated at scale?
 
-⚙️ How It Works
-📊 Data preprocessing: Cleans and standardizes player stats.
+## Approach
 
-🧠 Clustering model: KMeans groups players by combined performance and popularity.
+- **Data preprocessing:** Cleans and standardizes player statistics using `StandardScaler`
+- **Clustering model:** Size-constrained **KMeans**, capped at a maximum of 4 players per cluster (`size_max=4`), to keep groups tightly balanced
+- **Group balancing logic:** Post-clustering checks ensure no group is overloaded with multiple top performers or fan favorites
+- **Fallback handling:** Players missing a fan-interest score are assigned a neutral low value rather than breaking the pipeline
 
-🎯 Group balancing logic: Ensures no group is overloaded with top/fan-favorite players.
+## Features Used
 
-💡 Fallbacks: If a player has no fan score, a neutral low value is assigned.
+- Strokes Gained: Off-the-Tee, Approach, Putting, Total
+- Driving Distance, Greens in Regulation (GIR), Scrambling
+- Simulated Fan Interest Score
+- Play Style Tag (Aggressive, Balanced, Fast)
 
-🛠 Tech Stack
-Python
+## Outcome
 
-Pandas, Scikit-learn
+- 4-player, statistically balanced groups — no stacked stats or pacing mismatches
+- Broadcast-worthy matchups that distribute fan-favorite visibility evenly across groups
+- Interactive Streamlit dashboard to visualize and explore generated groupings
 
-Streamlit (optional UI)
+## Tech Stack
 
+Python · Pandas · Scikit-learn (KMeans, StandardScaler) · Streamlit
+
+## Why It Matters
+
+This shows ML can replicate a process golf organizers currently do manually — but at scale and with more consistency. The same approach could support broadcasters, fantasy sports platforms, or sports analytics tools that need fair, engaging groupings.
+
+---
+*Also shared on [LinkedIn](https://www.linkedin.com/posts/priyanshutiw1253_sportsanalytics-datascience-machinelearning-ugcPost-7349453914506739714-VMhI/).*
